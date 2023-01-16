@@ -84,13 +84,21 @@ class WMSFacadeProvider(BaseProvider):
 
         self._transparent = 'TRUE'
 
-        if crs in [4326, 'CRS;84']:
+        if crs in [4326, '4326', 'CRS;84']:
             LOGGER.debug('Swapping 4326 axis order to WMS 1.3 mode (yx)')
             bbox2 = ','.join(str(c) for c in
                              [bbox[1], bbox[0], bbox[3], bbox[2]])
         else:
             LOGGER.debug('Reprojecting coordinates')
-            LOGGER.debug(f'Output CRS: {CRS_CODES[crs]}')
+            LOGGER.debug("CRS %s", str(crs))
+            LOGGER.info("CRS %s", str(crs))
+            LOGGER.info("CRS %s", type(crs))
+            try:
+                LOGGER.debug(f'Output CRS: {CRS_CODES[crs]}')
+            except KeyError:
+                crs = str(crs)
+                CRS_CODES[crs] = f'EPSG:{crs}'
+                LOGGER.debug(f'Output CRS: {CRS_CODES[crs]}')
 
             src_crs = pyproj.CRS.from_string('epsg:4326')
             dest_crs = pyproj.CRS.from_string(CRS_CODES[crs])

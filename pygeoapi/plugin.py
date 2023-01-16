@@ -63,7 +63,8 @@ PLUGINS = {
         'CSV': 'pygeoapi.formatter.csv_.CSVFormatter'
     },
     'process': {
-        'HelloWorld': 'pygeoapi.process.hello_world.HelloWorldProcessor'
+        'HelloWorld': 'pygeoapi.process.hello_world.HelloWorldProcessor',
+        'ProcessNetcdf': 'pygeoapi.process.process_netcdf.ProcessNetcdfProcessor'
     },
     'process_manager': {
         'Dummy': 'pygeoapi.process.manager.dummy.DummyManager',

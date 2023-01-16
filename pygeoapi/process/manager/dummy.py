@@ -83,6 +83,7 @@ class DummyManager(BaseManager):
             LOGGER.debug('Forcing synchronous execution')
 
         try:
+            print("DATA DICTS", data_dict)
             jfmt, outputs = p.execute(data_dict)
             current_status = JobStatus.successful
         except Exception as err:
@@ -91,6 +92,7 @@ class DummyManager(BaseManager):
                 'description': 'Error updating job'
             }
             current_status = JobStatus.failed
+            LOGGER.exception(err)
             LOGGER.error(err)
 
         return jfmt, outputs, current_status
